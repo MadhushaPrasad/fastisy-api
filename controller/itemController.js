@@ -30,14 +30,28 @@ const addItem = (req, res) => {
 const deleteItem = (req, res) => {
   //delete single items
   const { id } = req.params;
-  console.log('hello');
-  items.filter((item) => item.id === id);
+  items.filter((item) => item.id !== id);
   res.send({ message: `Item ${id} has been deleted` });
 };
 
+const updateItem = (req, res) => {
+  //update single items
+  const { id } = req.params;
+
+  const { name, description, price, image } = req.body;
+
+  items = items.map((item) =>
+    item.id === id ? { id, name, description, price, image } : item
+  );
+
+  let item = items.find((item) => item.id === id);
+
+  res.send(item);
+};
 module.exports = {
   getAllItems,
   getItem,
   addItem,
   deleteItem,
+  updateItem,
 };
