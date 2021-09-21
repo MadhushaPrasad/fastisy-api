@@ -10,5 +10,11 @@ POST  http://127.0.0.1:5000/items HTTP/1.1
 Content-Type: application/json
 
 {
-    "name":"New Item"
+    "name": "New Item",
+    "description": "Description",
+    "price": 1024,
+    "image": "image.jpg"
 }
+
+### DELETE SINGLE ITEM
+DELETE  http://127.0.0.1:5000/items/1 HTTP/1.1

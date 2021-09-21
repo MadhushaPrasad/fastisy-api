@@ -2,6 +2,7 @@ const {
   getAllItems,
   getItem,
   addItem,
+  deleteItem,
 } = require('../controller/itemController');
 
 const item = {
@@ -43,12 +44,41 @@ const getItemOptions = {
 //post SIngle item options
 const postItemOptions = {
   schema: {
+    body: {
+      type: 'object',
+      required: ['name'],
+      required: ['description'],
+      required: ['price'],
+      required: ['image'],
+      properties: {
+        name: { type: 'string' },
+        description: { type: 'string' },
+        price: { type: 'number' },
+        image: { type: 'string' },
+      },
+    },
     response: {
       200: item,
     },
   },
 
   handler: addItem,
+};
+
+//Delete SIngle item options
+const deleteItemOptions = {
+  schema: {
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          message: { type: 'string' },
+        },
+      },
+    },
+  },
+
+  handler: deleteItem,
 };
 
 function itemRoutes(fastify, option, done) {
@@ -60,6 +90,9 @@ function itemRoutes(fastify, option, done) {
 
   //add item
   fastify.post('/items', postItemOptions);
+
+  //delete item
+  fastify.delete('/items/:id', deleteItemOptions);
 
   done();
 }
